@@ -1,41 +1,33 @@
-name: job-template
-description: Template for SGNL JavaScript jobs - replace with your job description
+name: hello-world-http
+description: Makes a POST request with "Hello World!" message to a specified URL with Bearer token authentication
 
-# Input parameters for web form generation
 inputs:
-  first_name:
+  url:
     type: text
-    description: First name of the person to greet
+    description: The URL to send the POST request to
     required: true
     validation:
-      min: 3
-      max: 50
+      regex: "^https?://.+"
 
-  last_name:
+secrets:
+  bearer_token:
     type: text
-    description: Last name of the person to greet
+    description: Bearer token for HTTP Authorization header
     required: true
-    validation:
-      min: 3
-      max: 50
 
-  language:
-    type: text
-    description: Language for the greeting (en, es, fr, de, it, pt, ja, zh, ru, ar)
-    required: false
-    validation:
-      regex: "^(en|es|fr|de|it|pt|ja|zh|ru|ar)$"
-
-# Expected output structure
 outputs:
-  message:
-    type: text
-    description: The hello world message
+  success:
+    type: boolean
+    description: Whether the HTTP request was successful
 
-  language:
-    type: text
-    description: The language that was used
+  response_status:
+    type: number
+    description: HTTP response status code
 
-  processed_at:
+  response_body:
+    type: text
+    description: Response body from the server
+
+  sent_at:
     type: datetime
-    description: When the operation completed (ISO 8601)
+    description: When the request was sent (ISO 8601)
