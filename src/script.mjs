@@ -17,8 +17,35 @@ export default {
   invoke: async (params, context) => {
     console.log('Starting hello world HTTP job execution');
 
+    // Debug logging - inputs
+    console.log('=== DEBUG: Input Analysis ===');
+    console.log('params type:', typeof params);
+    console.log('params keys:', Object.keys(params || {}));
+    console.log('params:', JSON.stringify(params, null, 2));
+    console.log('params JSON length:', JSON.stringify(params).length);
+
+    console.log('context.data type:', typeof context.data);
+    console.log('context.data keys:', Object.keys(context.data || {}));
+    console.log('context.data JSON length:', JSON.stringify(context.data || {}).length);
+
     const jobContext = context.data || {};
-      const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext, {injectSGNLNamespace: false});
+
+    console.log('=== DEBUG: Calling resolveJSONPathTemplates ===');
+    let resolvedParams, errors;
+    try {
+      const result = resolveJSONPathTemplates(params, jobContext, { injectSGNLNamespace: false });
+      resolvedParams = result.result;
+      errors = result.errors;
+      console.log('=== DEBUG: resolveJSONPathTemplates succeeded ===');
+      console.log('resolvedParams:', JSON.stringify(resolvedParams, null, 2));
+      console.log('errors:', errors);
+    } catch (err) {
+      console.error('=== DEBUG: resolveJSONPathTemplates threw an error ===');
+      console.error('Error name:', err.name);
+      console.error('Error message:', err.message);
+      console.error('Error stack:', err.stack);
+      throw err;
+    }
 
     if (errors.length > 0) {
       console.warn('Template resolution warnings:', errors.join('; '));
