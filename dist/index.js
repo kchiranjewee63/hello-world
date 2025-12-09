@@ -2320,7 +2320,7 @@ var script = {
     console.log('Starting hello world HTTP job execution');
 
     const jobContext = context.data || {};
-    const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext);
+      const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext, {injectSGNLNamespace: false});
 
     if (errors.length > 0) {
       console.warn('Template resolution warnings:', errors.join('; '));
