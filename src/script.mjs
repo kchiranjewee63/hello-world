@@ -5,6 +5,8 @@
  * with HTTP Authorization Bearer token.
  */
 
+import { resolveJSONPathTemplates } from '@sgnl-actions/utils';
+
 export default {
   /**
    * Main execution handler - sends hello world message via HTTP POST
@@ -15,7 +17,14 @@ export default {
   invoke: async (params, context) => {
     console.log('Starting hello world HTTP job execution');
 
-    const { url } = params;
+    const jobContext = context.data || {};
+    const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext);
+
+    if (errors.length > 0) {
+      console.warn('Template resolution warnings:', errors.join('; '));
+    }
+
+    const { url } = resolvedParams;
     const { secrets } = context;
 
     // Get bearer token from secrets
