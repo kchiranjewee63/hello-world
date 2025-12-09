@@ -2302,14 +2302,13 @@ function resolveJSONPathTemplates(input, jobContext, options = {}) {
 }
 
 /**
- * SGNL Hello World HTTP Job
- *
- * Makes a POST request with a hello world message to a specified URL
- * with HTTP Authorization Bearer token.
- */
+   * SGNL Hello World HTTP Job
+   *
+   * Makes a POST request with a hello world message to a specified URL
+   * with HTTP Authorization Bearer token.
+   */
 
-
-var script = {
+  var script = {
   /**
    * Main execution handler - sends hello world message via HTTP POST
    * @param {Object} params - Job input parameters
@@ -2332,28 +2331,22 @@ var script = {
 
     const jobContext = context.data || {};
 
+    // Call resolveJSONPathTemplates for debugging only
     console.log('=== DEBUG: Calling resolveJSONPathTemplates ===');
-    let resolvedParams, errors;
     try {
       const result = resolveJSONPathTemplates(params, jobContext, { injectSGNLNamespace: false });
-      resolvedParams = result.result;
-      errors = result.errors;
       console.log('=== DEBUG: resolveJSONPathTemplates succeeded ===');
-      console.log('resolvedParams:', JSON.stringify(resolvedParams, null, 2));
-      console.log('errors:', errors);
+      console.log('resolved result:', JSON.stringify(result.result, null, 2));
+      console.log('resolved errors:', result.errors);
     } catch (err) {
       console.error('=== DEBUG: resolveJSONPathTemplates threw an error ===');
       console.error('Error name:', err.name);
       console.error('Error message:', err.message);
       console.error('Error stack:', err.stack);
-      throw err;
     }
 
-    if (errors.length > 0) {
-      console.warn('Template resolution warnings:', errors.join('; '));
-    }
-
-    const { url } = resolvedParams;
+    // Use original params (not resolved) for actual logic
+    const { url } = params;
     const { secrets } = context;
 
     // Get bearer token from secrets
@@ -2435,6 +2428,6 @@ var script = {
     const { reason } = params;
     console.log(`Job halted: ${reason}`);
   }
-};
+  };
 
 module.exports = script;
