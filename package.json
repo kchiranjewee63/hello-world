@@ -24,7 +24,7 @@
   "author": "SGNL Engineering",
   "license": "MIT",
   "dependencies": {
-    "@sgnl-actions/utils": "github:sgnl-actions/utils#v1.0.2",
+    "@sgnl-actions/utils": "github:sgnl-actions/utils#fix-crypto-import",
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
