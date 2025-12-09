@@ -325,22 +325,14 @@ function resolveJSONPathTemplates(input, jobContext, options = {}) {
 
     const jobContext = context.data || {};
 
-    // Call resolveJSONPathTemplates for debugging only
-    console.log('=== DEBUG: Calling resolveJSONPathTemplates ===');
-    try {
-      const result = resolveJSONPathTemplates(params, jobContext, { injectSGNLNamespace: false });
-      console.log('=== DEBUG: resolveJSONPathTemplates succeeded ===');
-      console.log('resolved result:', JSON.stringify(result.result, null, 2));
-      console.log('resolved errors:', result.errors);
-    } catch (err) {
-      console.error('=== DEBUG: resolveJSONPathTemplates threw an error ===');
-      console.error('Error name:', err.name);
-      console.error('Error message:', err.message);
-      console.error('Error stack:', err.stack);
+    // Resolve JSONPath templates in params
+    const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext, { injectSGNLNamespace: false });
+    if (errors.length > 0) {
+      console.warn('Template resolution errors:', errors);
     }
+    console.log('Resolved params:', JSON.stringify(resolvedParams, null, 2));
 
-    // Use original params (not resolved) for actual logic
-    const { url } = params;
+    const { url } = resolvedParams;
     const { secrets } = context;
 
     // Get bearer token from secrets
