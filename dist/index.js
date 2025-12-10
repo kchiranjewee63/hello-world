@@ -232,6 +232,7 @@ function resolveJSONPathTemplates(input, jobContext, options = {}) {
 
   // Inject SGNL namespace if enabled
   const resolvedJobContext = shouldInjectSgnl ? injectSGNLNamespace(jobContext || {}) : (jobContext || {});
+  console.log('resolvedJobContext:', JSON.stringify(resolvedJobContext, null, 2));
 
   const allErrors = [];
 
@@ -308,7 +309,7 @@ function resolveJSONPathTemplates(input, jobContext, options = {}) {
     const jobContext = context.data || {};
 
     // Resolve JSONPath templates in params
-    const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext, { injectSGNLNamespace: false });
+    const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext, { injectSGNLNamespace: true });
     if (errors.length > 0) {
       console.warn('Template resolution errors:', errors);
     }
