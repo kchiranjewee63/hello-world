@@ -309,7 +309,7 @@ function resolveJSONPathTemplates(input, jobContext, options = {}) {
     const jobContext = context.data || {};
 
     // Resolve JSONPath templates in params
-    const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext, { injectSGNLNamespace: true });
+    const { result: resolvedParams, errors } = resolveJSONPathTemplates(params, jobContext);
     if (errors.length > 0) {
       console.warn('Template resolution errors:', errors);
     }
