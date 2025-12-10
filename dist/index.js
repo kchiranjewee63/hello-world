@@ -314,7 +314,7 @@ function resolveJSONPathTemplates(input, jobContext, options = {}) {
     }
     console.log('Resolved params:', JSON.stringify(resolvedParams, null, 2));
 
-    const { url } = resolvedParams;
+    const { url, message } = resolvedParams;
     const { secrets } = context;
 
     // Get bearer token from secrets
@@ -329,7 +329,7 @@ function resolveJSONPathTemplates(input, jobContext, options = {}) {
 
     // Build the message payload
     const payload = {
-      message: 'Hello World!',
+      message: message || 'Hello World!',
       timestamp: new Date().toISOString()
     };
 
