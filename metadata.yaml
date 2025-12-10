@@ -8,6 +8,10 @@ inputs:
     required: true
     validation:
       regex: "^https?://.+"
+  message:
+    type: text
+    description: Custom message to send in the request body (defaults to "Hello World!")
+    required: false
 
 secrets:
   bearer_token:
